@@ -71,9 +71,9 @@ class Address(Model):
         database = db
 
 class Account(Model):
-    user = ForeignKeyField(User, default=0, related_name='account')
+    user = ForeignKeyField(User, null=True, related_name='account')
+    organization = ForeignKeyField(Organization,null=True,related_name='account')
     address = ForeignKeyField(Address, related_name='account')
-    organization = ForeignKeyField(Organization, default=0,related_name='account')
     debit_card = CharField()
     expiry_date = CharField() # YYYYMM
     cvc = CharField(null=True)
@@ -95,8 +95,8 @@ class Account(Model):
         database = db
 
 class Event(Model):
-    owner = ForeignKeyField(User, default=0,related_name='events')
-    organization = ForeignKeyField(Organization, default=0,related_name='events')
+    owner = ForeignKeyField(User, null=True,related_name='events')
+    organization = ForeignKeyField(Organization, null=True,related_name='events')
     address =  ForeignKeyField(Address, related_name='event')
     name = CharField()
     body = TextField(null=True)

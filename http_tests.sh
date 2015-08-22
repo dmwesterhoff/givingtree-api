@@ -1,12 +1,16 @@
 #!/bin/bash
 
 prefix="http://"
-host="10.0.0.2:5000"
+#host="10.0.0.2:5000"
+host="192.168.1.78:5000"
 
 echo "$prefix$host"
 
 http "$prefix$host/user/"
 http "$prefix$host/user/1/"
+
+http "$prefix$host/organization/"
+http "$prefix$host/organization/1/"
 
 http "$prefix$host/account/"
 http "$host/account/1/"

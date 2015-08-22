@@ -6,6 +6,7 @@ from requests.accountrequests import AccountRequests
 from requests.addressrequests import AddressRequests
 from requests.eventrequests import EventRequests
 from requests.transactionrequests import TransactionRequests
+from requests.organizationrequests import OrganizationRequests
 
 app = Flask(__name__)
 api = Api(app)
@@ -17,6 +18,7 @@ class Status(Resource):
 
     def delete(self):
         return {'status':'success'}
+
 
 @api.resource('/user/<int:id>/')
 class UserItemViewSet(Resource):
@@ -31,6 +33,29 @@ class UserViewSet(Resource):
 
     def get(self):
         return {'status':'true','data':self.requests.users()}
+
+    def post(self):
+        return
+
+    def delete(self):
+        return {'status':'success'}
+
+
+@api.resource('/organization/<int:id>/')
+class OrganizationItemViewSet(Resource):
+    def get(self, id):
+        return {'status':'true',
+                'id':id}
+
+        return {'status':'success'}
+
+@api.resource('/organization/')
+class OrganizationViewSet(Resource):
+    def __init__(self):
+        self.requests = OrganizationRequests()
+
+    def get(self):
+        return {'status':'true','data':self.requests.organizations()}
 
     def post(self):
         return
