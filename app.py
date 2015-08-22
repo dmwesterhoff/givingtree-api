@@ -1,6 +1,11 @@
 from flask import Flask
 from flask_restful import Resource, Api
 from models import *
+from requests.userrequests import UserRequests
+from requests.accountrequests import AccountRequests
+from requests.addressrequests import AddressRequests
+from requests.eventrequests import EventRequests
+from requests.transactionrequests import TransactionRequests
 
 app = Flask(__name__)
 api = Api(app)
@@ -21,8 +26,11 @@ class UserItemViewSet(Resource):
 
 @api.resource('/user/')
 class UserViewSet(Resource):
+    def __init__(self):
+        self.requests = UserRequests()
+
     def get(self):
-        return {'status':'true'}
+        return {'status':'true','data':self.requests.users()}
 
     def post(self):
         return
@@ -38,6 +46,9 @@ class AddressItemViewSet(Resource):
 
 @api.resource('/address/')
 class AddressViewSet(Resource):
+    def __init__(self):
+        self.requests = AddressRequests()
+
     def get(self):
         return {'status':'true'}
 
@@ -55,6 +66,9 @@ class AccountItemViewSet(Resource):
 
 @api.resource('/account/')
 class AccountViewSet(Resource):
+    def __init__(self):
+        self.requests = AccountRequests()
+
     def get(self):
         return {'status':'true'}
 
@@ -72,6 +86,9 @@ class EventItemViewSet(Resource):
 
 @api.resource('/event/')
 class EventViewSet(Resource):
+    def __init__(self):
+        self.requests = EventRequests()
+
     def get(self):
         return {'status':'true'}
 
@@ -89,6 +106,9 @@ class TransactionItemViewSet(Resource):
 
 @api.resource('/transaction/')
 class TransactionViewSet(Resource):
+    def __init__(self):
+        self.requests = TransactionRequests()
+
     def get(self):
         return {'status':'true'}
 

@@ -14,11 +14,17 @@ class User(Model):
     last_name = CharField()
     date_of_birth = CharField() # YYYYMMDD
 
+    def dict(self):
+        return vars(self)['_data']
+
     def json_string(self):
-        return json.dumps(vars(self)['_data'])
+        return json.dumps(self.dict())
+
+    def __repr__(self):
+        return self.json_string()
 
     def __str__(self):
-        return self.json_string()
+        return json.dumps(self.dict(), indent=3, sort_keys=True)
 
     class Meta:
         database = db
@@ -31,11 +37,17 @@ class Address(Model):
     state = CharField()
     country = CharField()
 
+    def dict(self):
+        return vars(self)['_data']
+
     def json_string(self):
-        return json.dumps(vars(self)['_data'])
+        return json.dumps(self.dict())
+
+    def __repr__(self):
+        return self.json_string()
 
     def __str__(self):
-        return self.json_string()
+        return json.dumps(self.dict(), indent=3, sort_keys=True)
 
     class Meta:
         database = db
@@ -47,11 +59,17 @@ class Account(Model):
     alias = CharField()
     address = ForeignKeyField(Address, related_name='account')
 
+    def dict(self):
+        return vars(self)['_data']
+
     def json_string(self):
-        return json.dumps(vars(self)['_data'])
+        return json.dumps(self.dict())
+
+    def __repr__(self):
+        return self.json_string()
 
     def __str__(self):
-        return self.json_string()
+        return json.dumps(self.dict(), indent=3, sort_keys=True)
 
     class Meta:
         database = db
@@ -67,11 +85,17 @@ class Event(Model):
     longitude = FloatField()
     address =  ForeignKeyField(Address, related_name='event')
 
+    def dict(self):
+        return vars(self)['_data']
+
     def json_string(self):
-        return json.dumps(vars(self)['_data'])
+        return json.dumps(self.dict())
+
+    def __repr__(self):
+        return self.json_string()
 
     def __str__(self):
-        return self.json_string()
+        return json.dumps(self.dict(), indent=3, sort_keys=True)
 
     class Meta:
         database = db
@@ -83,11 +107,17 @@ class Transaction(Model):
     timestamp = CharField() # MM-DD-YYYY HH:MM:SS
     note = TextField(null=True)
 
+    def dict(self):
+        return vars(self)['_data']
+
     def json_string(self):
-        return json.dumps(vars(self)['_data'])
+        return json.dumps(self.dict())
+
+    def __repr__(self):
+        return self.json_string()
 
     def __str__(self):
-        return self.json_string()
+        return json.dumps(self.dict(), indent=3, sort_keys=True)
 
     class Meta:
         database = db

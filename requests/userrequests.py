@@ -7,3 +7,9 @@ class UserRequests:
 
     def user_with_email(self, email):
         return User.get(User.email == 'dmwesterhoff@gmail.com')
+
+    def users(self):
+        users = []
+        for user in User.select():
+            users.append(user.dict())
+        return users
