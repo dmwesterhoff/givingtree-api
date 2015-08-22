@@ -1,6 +1,6 @@
 from models import User
 
-class UserRequests:
+class UserRequests(object):
 
     def user_with_id(self, user_id):
         return User.get(User.id == user_id)

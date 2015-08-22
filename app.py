@@ -50,7 +50,7 @@ class AddressViewSet(Resource):
         self.requests = AddressRequests()
 
     def get(self):
-        return {'status':'true'}
+        return {'status':'true','data':self.requests.addresses()}
 
     def post(self):
         return
@@ -70,7 +70,7 @@ class AccountViewSet(Resource):
         self.requests = AccountRequests()
 
     def get(self):
-        return {'status':'true'}
+        return {'status':'true','data':self.requests.accounts()}
 
     def post(self):
         return
@@ -90,7 +90,7 @@ class EventViewSet(Resource):
         self.requests = EventRequests()
 
     def get(self):
-        return {'status':'true'}
+        return {'status':'true','data':self.requests.events()}
 
     def post(self):
         return
@@ -110,7 +110,7 @@ class TransactionViewSet(Resource):
         self.requests = TransactionRequests()
 
     def get(self):
-        return {'status':'true'}
+        return {'status':'true','data':self.requests.transactions()}
 
     def post(self):
         return
