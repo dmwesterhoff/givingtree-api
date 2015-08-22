@@ -1,5 +1,6 @@
 import peewee
 from peewee import *
+import json
 
 # Setup and connect to the database
 db = peewee.MySQLDatabase("the_giving_tree", host="localhost", user="root")
@@ -13,6 +14,12 @@ class User(Model):
     last_name = CharField()
     date_of_birth = CharField() # YYYYMMDD
 
+    def json_string(self):
+        return json.dumps(vars(self)['_data'])
+
+    def __str__(self):
+        return self.json_string()
+
     class Meta:
         database = db
 
@@ -24,6 +31,12 @@ class Address(Model):
     state = CharField()
     country = CharField()
 
+    def json_string(self):
+        return json.dumps(vars(self)['_data'])
+
+    def __str__(self):
+        return self.json_string()
+
     class Meta:
         database = db
 
@@ -33,6 +46,12 @@ class Account(Model):
     expiry_date = CharField() # YYYYMM
     alias = CharField()
     address = ForeignKeyField(Address, related_name='account')
+
+    def json_string(self):
+        return json.dumps(vars(self)['_data'])
+
+    def __str__(self):
+        return self.json_string()
 
     class Meta:
         database = db
@@ -48,6 +67,12 @@ class Event(Model):
     longitude = FloatField()
     address =  ForeignKeyField(Address, related_name='event')
 
+    def json_string(self):
+        return json.dumps(vars(self)['_data'])
+
+    def __str__(self):
+        return self.json_string()
+
     class Meta:
         database = db
 
@@ -57,6 +82,12 @@ class Transaction(Model):
     amount = IntegerField() # Amount in USD, implied decimal
     timestamp = CharField() # MM-DD-YYYY HH:MM:SS
     note = TextField(null=True)
+
+    def json_string(self):
+        return json.dumps(vars(self)['_data'])
+
+    def __str__(self):
+        return self.json_string()
 
     class Meta:
         database = db
