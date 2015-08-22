@@ -7,12 +7,30 @@ db = peewee.MySQLDatabase("the_giving_tree", host="localhost", user="root")
 db.connect()
 
 class User(Model):
-    email = CharField(unique=True)
-    password = CharField()
+    phone_number = CharField(unique=True)
     first_name = CharField()
     middle_name = CharField()
     last_name = CharField()
     date_of_birth = CharField() # YYYYMMDD
+
+    def dict(self):
+        return vars(self)['_data']
+
+    def json_string(self):
+        return json.dumps(self.dict())
+
+    def __repr__(self):
+        return self.json_string()
+
+    def __str__(self):
+        return json.dumps(self.dict(), indent=3, sort_keys=True)
+
+    class Meta:
+        database = db
+
+class Organization(Model):
+    name = CharField()
+    image = CharField(null=True)
 
     def dict(self):
         return vars(self)['_data']
@@ -53,11 +71,13 @@ class Address(Model):
         database = db
 
 class Account(Model):
-    user = ForeignKeyField(User, related_name='account')
+    user = ForeignKeyField(User, default=0, related_name='account')
+    address = ForeignKeyField(Address, related_name='account')
+    organization = ForeignKeyField(Organization, default=0,related_name='account')
     debit_card = CharField()
     expiry_date = CharField() # YYYYMM
+    cvc = CharField(null=True)
     alias = CharField()
-    address = ForeignKeyField(Address, related_name='account')
 
     def dict(self):
         return vars(self)['_data']
@@ -75,15 +95,16 @@ class Account(Model):
         database = db
 
 class Event(Model):
+    owner = ForeignKeyField(User, default=0,related_name='events')
+    organization = ForeignKeyField(Organization, default=0,related_name='events')
+    address =  ForeignKeyField(Address, related_name='event')
     name = CharField()
     body = TextField(null=True)
-    owner = ForeignKeyField(User, related_name='events')
     time_begins = CharField() # MM-DD-YYYY HH:MM:SS
     time_ends = CharField() # MM-DD-YYYY HH:MM:SS
     amount_raised = IntegerField(default=0) # Amount in USD, implied decimal
     latitude = FloatField()
     longitude = FloatField()
-    address =  ForeignKeyField(Address, related_name='event')
 
     def dict(self):
         return vars(self)['_data']
@@ -103,6 +124,7 @@ class Event(Model):
 class Transaction(Model):
     to_user = ForeignKeyField(User, related_name='transactions_sent')
     from_user = ForeignKeyField(User, related_name='transaction_received')
+    event = ForeignKeyField(Event, related_name='transactions')
     amount = IntegerField() # Amount in USD, implied decimal
     timestamp = CharField() # MM-DD-YYYY HH:MM:SS
     note = TextField(null=True)

@@ -32,7 +32,7 @@ end
 # unset irrelevant variables
 deactivate nondestructive
 
-set -gx VIRTUAL_ENV "/Users/dwesterhoff/Developer/Projects/TheGivingTree/api/env"
+set -gx VIRTUAL_ENV "/Users/TimCo/Pinn/givingtree/givingtree-api/env"
 
 set -gx _OLD_VIRTUAL_PATH $PATH
 set -gx PATH "$VIRTUAL_ENV/bin" $PATH

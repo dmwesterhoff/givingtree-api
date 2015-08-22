@@ -39,7 +39,7 @@ deactivate () {
 # unset irrelevant variables
 deactivate nondestructive
 
-VIRTUAL_ENV="/Users/dwesterhoff/Developer/Projects/TheGivingTree/api/env"
+VIRTUAL_ENV="/Users/TimCo/Pinn/givingtree/givingtree-api/env"
 export VIRTUAL_ENV
 
 _OLD_VIRTUAL_PATH="$PATH"
