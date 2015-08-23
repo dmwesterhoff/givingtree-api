@@ -101,7 +101,7 @@ class Event(Model):
     organization_id = IntegerField(default=0,null=True)
     address =  ForeignKeyField(Address, related_name='event')
     name = CharField()
-    body = TextField(null=True)
+    body = TextField(default="")
     time_begins = CharField() # MM-DD-YYYY HH:MM:SS
     time_ends = CharField() # MM-DD-YYYY HH:MM:SS
     amount_raised = IntegerField(default=0) # Amount in USD, implied decimal
