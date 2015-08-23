@@ -38,17 +38,12 @@ class UserTransactionViewSet(Resource):
         self.requests = TransactionRequests()
 
     def get(self, id):
-        to_user = []
-        from_user = []
+        transactions = []
         for transaction in self.requests.transactions():
-            if transaction["to_user"]==id:
-                to_user.append(transaction)
-
-            if transaction["from_user"]==id:
-                from_user.append(transaction)
+            transactions.append(transaction)
 
         return {'status':'success',
-                'data':{'to_user':to_user,'from_user':from_user}}
+                'data':transactions}
 
 @api.resource('/users/<int:id>/')
 class UserItemViewSet(Resource):
@@ -295,4 +290,4 @@ class TransactionViewSet(Resource):
         return {'status':'success'}
 
 if __name__ == '__main__':
-    app.run(debug=True, host='192.168.1.78')
+    app.run(debug=True, host='10.0.0.2')
