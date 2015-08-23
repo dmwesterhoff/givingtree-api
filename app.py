@@ -19,6 +19,36 @@ class Status(Resource):
     def delete(self):
         return {'status':'success'}
 
+@api.resource('/users/<int:id>/addresses/')
+class UserAddressViewSet(Resource):
+    def __init__(self):
+        self.accounts = AccountRequests()
+
+    def get(self,id):
+        for account in self.accounts.accounts():
+            if account["user"] == id:
+                address = Address.get(Address.id==account["address"]).dict()
+
+        return {'status':'success',
+                'data':address }
+
+@api.resource('/users/<int:id>/transactions/')
+class UserTransactionViewSet(Resource):
+    def __init__(self):
+        self.requests = TransactionRequests()
+
+    def get(self, id):
+        to_user = []
+        from_user = []
+        for transaction in self.requests.transactions():
+            if transaction["to_user"]==id:
+                to_user.append(transaction)
+
+            if transaction["from_user"]==id:
+                from_user.append(transaction)
+
+        return {'status':'success',
+                'data':{'to_user':to_user,'from_user':from_user}}
 
 @api.resource('/users/<int:id>/')
 class UserItemViewSet(Resource):
@@ -135,7 +165,7 @@ class AccountViewSet(Resource):
 
     def post(self):
         _user = request.form['user']
-        _organization_id = request.form['organization_id']
+        _organization = request.form['organization']
         _address = request.form['address']
         _debit_card = request.form['debit_card']
         _expiry_date = request.form['expiry_date']
@@ -143,7 +173,7 @@ class AccountViewSet(Resource):
         _alias = request.form['alias']
         return {'status':'success',
                 'data': Account.create(user=_user,
-                              organization_id=_organization_id,
+                              organization=_organization,
                               address=_address,
                               debit_card=_debit_card,
                               expiry_date=_expiry_date,
@@ -152,6 +182,15 @@ class AccountViewSet(Resource):
 
     def delete(self):
         return {'status':'success'}
+
+@api.resource('/events/<int:id>/transactions/')
+class EventTransactionViewSet(Resource):
+    def __init__(self):
+        self.requests = TransactionRequests()
+
+    def get(self, id):
+        return {'status':'success',
+                'data':self.requests.transactions()}
 
 @api.resource('/events/<int:id>/')
 class EventItemViewSet(Resource):
@@ -172,7 +211,7 @@ class EventViewSet(Resource):
 
     def post(self):
         _owner = request.form['owner']
-        _organization_id = request.form['organization_id']
+        _organization = request.form['organization']
         _address = request.form['address']
         _name = request.form['name']
         _body = request.form['body']
@@ -183,7 +222,7 @@ class EventViewSet(Resource):
         _longitude = request.form['longitude']
         return {'status':'success',
                 'data': Event.create(owner=_owner,
-                            organization_id=_organization_id,
+                            organization=_organization,
                             address=_address,
                             name=_name,
                             body=_body,
