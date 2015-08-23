@@ -221,6 +221,7 @@ class EventItemViewSet(Resource):
         event.latitude=_latitude
         event.longitude=_longitude
         event.amount_raised = _amount_raised
+        event.save()
         return {'status':'success',
                 'data': event.dict() }
 
