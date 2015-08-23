@@ -199,7 +199,30 @@ class EventItemViewSet(Resource):
                 'data':Event.get(Event.id==id).dict()}
 
     def put(self, id):
-        return
+        event = Event.get(Event.id==id)
+        _owner = request.form['owner']
+        _organization = request.form['organization']
+        _address = request.form['address']
+        _name = request.form['name']
+        _body = request.form['body']
+        _time_begins = request.form['time_begins']
+        _time_ends = request.form['time_ends']
+        _amount_raised = request.form['amount_raised']
+        _latitude = request.form['latitude']
+        _longitude = request.form['longitude']
+        event.owner=_owner
+        event.organization=_organization
+        event.address=_address
+        event.name=_name
+        event.body=_body
+        event.time_begins=_time_begins
+        event.time_ends=_time_ends
+        event.amount_raised=_amount_raised
+        event.latitude=_latitude
+        event.longitude=_longitude
+        event.amount_raised = _amount_raised
+        return {'status':'success',
+                'data': event.dict() }
 
 @api.resource('/events/')
 class EventViewSet(Resource):
