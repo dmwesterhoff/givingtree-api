@@ -6,20 +6,20 @@ host="192.168.1.78:5000"
 
 echo "$prefix$host"
 
-http "$prefix$host/user/"
-http "$prefix$host/user/1/"
+http "$prefix$host/users/"
+http "$prefix$host/users/1/"
 
-http "$prefix$host/organization/"
-http "$prefix$host/organization/1/"
+http "$prefix$host/organizations/"
+http "$prefix$host/organizations/1/"
 
-http "$prefix$host/account/"
-http "$host/account/1/"
+http "$prefix$host/accounts/"
+http "$host/accounts/1/"
 
-http "$prefix$host/address/"
-http "$prefix$host/address/1/"
+http "$prefix$host/addresses/"
+http "$prefix$host/addresses/1/"
 
-http "$prefix$host/event/"
-http "$prefix$host/event/1/"
+http "$prefix$host/events/"
+http "$prefix$host/events/1/"
 
-http "$prefix$host/transaction/"
-http "$prefix$host/transaction/1/"
+http "$prefix$host/transactions/"
+http "$prefix$host/transactions/1/"
